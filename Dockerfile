@@ -20,14 +20,17 @@ RUN apt-get update && apt-get install -y \
     wget \
     zsh \
     curl \
+    sudo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Add a non-root user (optional, but recommended for security)
 RUN useradd -m dev
 RUN chsh -s $(which zsh) dev
-
+# Add dev to sudoers
+RUN echo "dev ALL=(ALL) NOPASSWD:ALL" | EDITOR='tee -a' visudo
 USER dev
+
 
 # Use zsh-in-docker https://github.com/deluan/zsh-in-docker
 # Default powerline10k theme, no plugins installed
@@ -46,4 +49,4 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 # Set the default command to zsh
 CMD ["/bin/zsh"] 
 
-WORKDIR /workspaces
+WORKDIR /workspace

@@ -1,3 +1,23 @@
 # DockerfileBank
 
 This repo stores my favorite docker image configuration, aka Dockerfile as development environments.
+
+
+
+## Build docker image 
+
+```sh
+docker buildx build --load -t example_image .
+```
+
+Replace the `<image_name>` as you like.
+Some useful options:
+
+- `--platform linux/arm64` I use this to build a arm-linux image to run on my MacbookPro M1 (with arm SoC)
+
+
+## Run docker container
+
+```sh
+docker run -it -v $(pwd):/workspace bank_base:latest
+```
